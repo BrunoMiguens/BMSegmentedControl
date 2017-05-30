@@ -9,67 +9,67 @@
 import UIKit
 
 enum ComponentOrientation {
-    case TopDown
-    case LeftRight
+    case topDown
+    case leftRight
 }
 
 class DPSegmentedControl: UIControl {
 
-    private var componentOrientation: ComponentOrientation = ComponentOrientation.LeftRight
+    fileprivate var componentOrientation: ComponentOrientation = ComponentOrientation.leftRight
 
-    private var labels = [UILabel]()
-    private var icons = [UIImageView]()
-    private var selectedLabel = UILabel()
+    fileprivate var labels = [UILabel]()
+    fileprivate var icons = [UIImageView]()
+    fileprivate var selectedLabel = UILabel()
 
-    private var img_icon = UIImageView()
-    private var selected_img_icon = UIImageView()
+    fileprivate var imgIcon = UIImageView()
+    fileprivate var selectedImgIcon = UIImageView()
 
-    private var withIcon: Bool = true
+    fileprivate var withIcon: Bool = true
 
-    private func setOrientation(orientation orientation: ComponentOrientation) {
+    fileprivate func setOrientation(_ orientation: ComponentOrientation) {
         switch orientation {
-        case .LeftRight:
-            componentOrientation = ComponentOrientation.LeftRight
-        case .TopDown :
-            componentOrientation = ComponentOrientation.TopDown
+        case .leftRight:
+            componentOrientation = ComponentOrientation.leftRight
+        case .topDown:
+            componentOrientation = ComponentOrientation.topDown
         }
     }
 
-    private var thumbColor: UIColor = UIColor.whiteColor() {
+    fileprivate var thumbColor: UIColor = .white {
         didSet {
             setThumbColor()
         }
     }
 
-    private func setThumbColor() {
+    fileprivate func setThumbColor() {
         thumbView.backgroundColor = thumbColor
     }
 
-    private var textColor: UIColor = UIColor.whiteColor()
+    fileprivate var textColor: UIColor = .white
 
-    private func setTextColor() {
+    fileprivate func setTextColor() {
         for i in 0..<labels.count {
             labels[i].textColor = textColor
             labels[i].font = UIFont(name: "HelveticaNeue", size: 14.0)
         }
     }
 
-    private var selectedTextColor: UIColor = UIColor.blackColor() {
+    fileprivate var selectedTextColor: UIColor = .black {
         didSet {
             setSelectedTextColor()
         }
     }
 
-    private func setSelectedTextColor() {
+    fileprivate func setSelectedTextColor() {
         selectedLabel.textColor = selectedTextColor
     }
 
-    private var thumbView = UIView()
+    fileprivate var thumbView = UIView()
 
-    private var items: [String] = []
+    fileprivate var items: [String] = []
 
-    private var icon: [UIImage] = []
-    private var selected_icon: [UIImage] = []
+    fileprivate var icon: [UIImage] = []
+    fileprivate var selectedIcon: [UIImage] = []
 
     var selectedIndex: Int = 0 {
         didSet {
@@ -77,23 +77,23 @@ class DPSegmentedControl: UIControl {
         }
     }
 
-    init(FrameWithoutIcon frame: CGRect, items: [String], backgroundColor: UIColor, thumbColor: UIColor, textColor: UIColor, selectedTextColor: UIColor) {
+    init(withoutIcon frame: CGRect, items: [String], backgroundColor: UIColor, thumbColor: UIColor, textColor: UIColor, selectedTextColor: UIColor) {
         super.init(frame: frame)
         self.items = items
         self.backgroundColor = backgroundColor
         self.thumbColor = thumbColor
         self.textColor = textColor
         self.selectedTextColor = selectedTextColor
-        self.componentOrientation = ComponentOrientation.TopDown
+        self.componentOrientation = ComponentOrientation.topDown
         self.withIcon = false
         setupView()
     }
 
-    init(FrameWithIcon frame: CGRect, items: [String], icons: [UIImage], selectedIcons: [UIImage], backgroundColor: UIColor, thumbColor: UIColor, textColor: UIColor, selectedTextColor: UIColor, orientation: ComponentOrientation) {
+    init(withIcon frame: CGRect, items: [String], icons: [UIImage], selectedIcons: [UIImage], backgroundColor: UIColor, thumbColor: UIColor, textColor: UIColor, selectedTextColor: UIColor, orientation: ComponentOrientation) {
         super.init(frame: frame)
         self.items = items
         self.icon = icons
-        self.selected_icon = selectedIcons
+        self.selectedIcon = selectedIcons
         self.backgroundColor = backgroundColor
         self.thumbColor = thumbColor
         self.textColor = textColor
@@ -106,25 +106,25 @@ class DPSegmentedControl: UIControl {
         super.init(coder: coder)!
     }
 
-    private func getIconFrameByOrientation(orientation: ComponentOrientation, index: Int, text: String) -> CGRect {
+    fileprivate func getIconFrameByOrientation(_ orientation: ComponentOrientation, index: Int, text: String) -> CGRect {
         let width = self.bounds.width/CGFloat(items.count)
         let height = self.bounds.height
         let iconX = getIconX(width, textWidth: evaluateStringWidth(text))
         let x = width*CGFloat(index-1)
 
         switch orientation {
-        case .LeftRight:
+        case .leftRight:
             let evaluateIconX = x + iconX
             let iconRect = CGRect(x: evaluateIconX, y: 0, width: 16, height: height)
             return iconRect
-        case .TopDown:
+        case .topDown:
             let centre: CGFloat = x + ((width-16)/2)
             let iconRect = CGRect(x: centre, y: 7, width: 16, height: 16)
             return iconRect
         }
     }
 
-    private func getTextFrameByOrintation(orientation: ComponentOrientation, text: String, index: Int) -> CGRect {
+    fileprivate func getTextFrameByOrintation(_ orientation: ComponentOrientation, text: String, index: Int) -> CGRect {
         let height = self.bounds.height
         let width = self.bounds.width/CGFloat(items.count)
         let textX = getTextX(width, textWidth: evaluateStringWidth(text))
@@ -132,10 +132,10 @@ class DPSegmentedControl: UIControl {
         let evaluateTextX = xPosition + textX
 
         switch orientation {
-        case .LeftRight:
+        case .leftRight:
             let textRect = CGRect(x: evaluateTextX, y: 0, width: width, height: height)
             return textRect
-        case .TopDown:
+        case .topDown:
             let centre = evaluateTextX - 13
             let textRect: CGRect?
             if withIcon {
@@ -147,18 +147,18 @@ class DPSegmentedControl: UIControl {
         }
     }
 
-    private func setupView() {
+    fileprivate func setupView() {
         layer.cornerRadius = 5
         setupLabels()
-        insertSubview(thumbView, atIndex: 0)
+        insertSubview(thumbView, at: 0)
     }
 
-    private func setupLabels() {
+    fileprivate func setupLabels() {
 
         for label in labels {
             label.removeFromSuperview()
         }
-        labels.removeAll(keepCapacity: true)
+        labels.removeAll(keepingCapacity: true)
 
         for index in 1...items.count {
 
@@ -173,12 +173,12 @@ class DPSegmentedControl: UIControl {
             let text = items[index-1]
 
             if withIcon {
-                self.img_icon = UIImageView(frame: getIconFrameByOrientation(self.componentOrientation, index: index, text: text))
-                self.img_icon.contentMode = .ScaleAspectFit
-                self.img_icon.image = icon[index-1]
+                self.imgIcon = UIImageView(frame: getIconFrameByOrientation(self.componentOrientation, index: index, text: text))
+                self.imgIcon.contentMode = .scaleAspectFit
+                self.imgIcon.image = icon[index-1]
 
-                view.addSubview(self.img_icon)
-                icons.append(self.img_icon)
+                view.addSubview(self.imgIcon)
+                icons.append(self.imgIcon)
             }
 
             self.addSubview(view)
@@ -188,18 +188,18 @@ class DPSegmentedControl: UIControl {
 
     }
 
-    private func getIconX(itemWidth: CGFloat, textWidth: CGFloat) -> CGFloat {
+    fileprivate func getIconX(_ itemWidth: CGFloat, textWidth: CGFloat) -> CGFloat {
         let iconWidth: CGFloat = 16.0
-        let avg = (iconWidth + textWidth)
-        let space: CGFloat = (itemWidth - avg)/2
+        let avg = iconWidth + textWidth
+        let space: CGFloat = (itemWidth - avg) / 2
 
         return space + 2
     }
 
-    private func getTextX(itemWidth: CGFloat, textWidth: CGFloat) -> CGFloat {
+    fileprivate func getTextX(_ itemWidth: CGFloat, textWidth: CGFloat) -> CGFloat {
         let iconWidth: CGFloat = 16.0
-        let avg = (iconWidth + textWidth)
-        let space: CGFloat = (itemWidth - avg)/2
+        let avg = iconWidth + textWidth
+        let space: CGFloat = (itemWidth - avg) / 2
 
         let x = space + iconWidth
 
@@ -239,7 +239,7 @@ class DPSegmentedControl: UIControl {
         }
     }
 
-    private func evaluateStringWidth (textToEvaluate: String) -> CGFloat {
+    fileprivate func evaluateStringWidth(_ textToEvaluate: String) -> CGFloat {
         let lbl = UILabel(frame: CGRect.zero)
         lbl.text = textToEvaluate
         lbl.sizeToFit()
@@ -247,19 +247,19 @@ class DPSegmentedControl: UIControl {
         return lbl.frame.width
     }
 
-    internal override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        let location = touch.locationInView(self)
+    internal override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let location = touch.location(in: self)
 
         let labelWidth = self.bounds.width / CGFloat(items.count)
 
         var calculatedIndex: Int?
-        for (index, item) in labels.enumerate() {
+        for (index, item) in labels.enumerated() {
 
             let text = items[index]
 
             let iconX = getIconX(labelWidth, textWidth: evaluateStringWidth(text))
 
-            let frame = CGRectMake(item.frame.origin.x - (iconX*2), 0, item.frame.width, self.bounds.height)
+            let frame = CGRect(x: item.frame.origin.x - (iconX*2), y: 0, width: item.frame.width, height: self.bounds.height)
 
             if frame.contains(location) {
                 calculatedIndex = index
@@ -274,18 +274,18 @@ class DPSegmentedControl: UIControl {
 
         if calculatedIndex != nil {
             selectedIndex = calculatedIndex!
-            sendActionsForControlEvents(.ValueChanged)
+            sendActions(for: .valueChanged)
         }
         return false
     }
 
-    private func displayNewSelectedIndex() {
+    fileprivate func displayNewSelectedIndex() {
         selectedLabel = labels[selectedIndex]
         selectedLabel.textColor = selectedTextColor
 
         if withIcon {
-            selected_img_icon = icons[selectedIndex]
-            selected_img_icon.image = selected_icon[selectedIndex]
+            selectedImgIcon = icons[selectedIndex]
+            selectedImgIcon.image = selectedIcon[selectedIndex]
         }
 
         let text = items[selectedIndex]
@@ -293,13 +293,13 @@ class DPSegmentedControl: UIControl {
         let labelWidth = self.bounds.width / CGFloat(items.count)
         let iconX = getTextX(labelWidth, textWidth: evaluateStringWidth(text))
 
-        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: [], animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: [], animations: {
 
             var labelFrame = self.selectedLabel.bounds
 
             print("selectedLabel: \(self.selectedLabel.frame.origin.x)")
 
-            if self.componentOrientation == ComponentOrientation.TopDown {
+            if self.componentOrientation == ComponentOrientation.topDown {
                 labelFrame.origin.x = self.selectedLabel.frame.origin.x - iconX + 4 + 13
             } else {
                 labelFrame.origin.x = self.selectedLabel.frame.origin.x - iconX + 4
@@ -311,24 +311,24 @@ class DPSegmentedControl: UIControl {
 
             self.thumbView.frame = self.setDefaultSelectionPoint(self.selectedIndex)
 
-            }, completion: nil)
+        }, completion: nil)
 
     }
 
-    private func setDefaultSelectionPoint(index: Int) -> CGRect {
+    fileprivate func setDefaultSelectionPoint(_ index: Int) -> CGRect {
         let selectedLabel = labels[index]
         var selectedFrame = selectedLabel.bounds
 
         if withIcon {
-            selected_img_icon = icons[selectedIndex]
-            selected_img_icon.image = selected_icon[selectedIndex]
+            selectedImgIcon = icons[selectedIndex]
+            selectedImgIcon.image = selectedIcon[selectedIndex]
         }
 
         let text = items[selectedIndex]
         let labelWidth = self.bounds.width / CGFloat(items.count)
         let iconX = getTextX(labelWidth, textWidth: evaluateStringWidth(text))
 
-        if self.componentOrientation == ComponentOrientation.TopDown {
+        if self.componentOrientation == ComponentOrientation.topDown {
             selectedFrame.origin.x = self.selectedLabel.frame.origin.x - iconX + 4 + 13
         } else {
             selectedFrame.origin.x = self.selectedLabel.frame.origin.x - iconX + 4

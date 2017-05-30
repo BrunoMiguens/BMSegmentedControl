@@ -14,10 +14,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let screen = UIScreen.mainScreen().bounds
+        let screen = UIScreen.main.bounds
 
         let segmentedControl = DPSegmentedControl.init(
-            FrameWithIcon: CGRectMake(8, 50, screen.width - 16, 44),
+            withIcon: CGRect(x: 8, y: 50, width: screen.width - 16, height: 44),
             items: ["Happy", "Normal", "Sad"],
             icons: [UIImage(named: "happy_gray")!, UIImage(named: "flat_gray")!, UIImage(named: "sad_gray")!],
             selectedIcons: [UIImage(named: "happy_white")!, UIImage(named: "flat_white")!, UIImage(named: "sad_white")!],
@@ -25,20 +25,20 @@ class ViewController: UIViewController {
             thumbColor: UIColor.init(hex: "#54C3EF"),
             textColor: UIColor(hex: "#808080"),
             selectedTextColor: UIColor(hex: "#FFFFFF"),
-            orientation: ComponentOrientation.LeftRight)
+            orientation: ComponentOrientation.leftRight)
 
         segmentedControl.selectedIndex = 1
 
-        segmentedControl.addTarget(self, action: #selector(self.action(_:)), forControlEvents: .ValueChanged)
+        segmentedControl.addTarget(self, action: #selector(self.action(_:)), for: .valueChanged)
         self.view.addSubview(segmentedControl)
 
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
     }
 
-    func action(sender: DPSegmentedControl) {
+    func action(_ sender: DPSegmentedControl) {
         print("sender: \(sender.selectedIndex)")
     }
 
@@ -51,15 +51,15 @@ class ViewController: UIViewController {
 
 extension UIColor {
     convenience init(hex: String) {
-        let hexString: String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        let scanner            = NSScanner(string: hexString)
+        let hexString: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let scanner            = Scanner(string: hexString)
 
-        if (hexString.hasPrefix("#")) {
+        if hexString.hasPrefix("#") {
             scanner.scanLocation = 1
         }
 
         var color: UInt32 = 0
-        scanner.scanHexInt(&color)
+        scanner.scanHexInt32(&color)
 
         let mask = 0x000000FF
         let r = Int(color >> 16) & mask
@@ -70,6 +70,6 @@ extension UIColor {
         let green = CGFloat(g) / 255.0
         let blue  = CGFloat(b) / 255.0
 
-        self.init(red:red, green:green, blue:blue, alpha:1)
+        self.init(red: red, green: green, blue: blue, alpha: 1)
     }
 }
