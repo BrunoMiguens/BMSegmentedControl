@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 
   s.summary                   = "Segmented control with image and title."
   s.description               = "This is a custom Segmented Control with icon and text on every segment."
-  s.homepage                  = "https://github.com/BrunoMiguens/BMSegmentedControl"
+  s.homepage                  = "https://github.com/BrunoMiguens/BMSegmentedControl/"
   s.license                   = { :type => "MIT", :file => "LICENSE" }
   s.author                    = 'BrunoMiguens'
 
