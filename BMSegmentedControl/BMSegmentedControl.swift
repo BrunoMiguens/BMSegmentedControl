@@ -158,6 +158,9 @@ class BMSegmentedControl: UIControl {
     }
     
     fileprivate func setupLabels() {
+        guard items.count > 0 else {
+            return
+        }
         
         for label in labels {
             label.removeFromSuperview()
@@ -284,6 +287,10 @@ class BMSegmentedControl: UIControl {
     }
     
     fileprivate func displayNewSelectedIndex() {
+        guard selectedIndex < labels.count else {
+            return
+        }
+        
         selectedLabel = labels[selectedIndex]
         selectedLabel.textColor = selectedTextColor
         
