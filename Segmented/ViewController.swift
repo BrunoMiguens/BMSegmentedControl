@@ -10,13 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-//    var segmentedControl: DPSegmentedControl!
+//    var segmentedControl: BMSegmentedControl!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let screen = UIScreen.main.bounds
 
-        let segmentedControl = DPSegmentedControl.init(
+        let segmentedControl = BMSegmentedControl.init(
             withIcon: CGRect(x: 8, y: 50, width: screen.width - 16, height: 44),
             items: ["Happy", "Normal", "Sad"],
             icons: [UIImage(named: "happy_gray")!, UIImage(named: "flat_gray")!, UIImage(named: "sad_gray")!],
@@ -38,7 +38,7 @@ class ViewController: UIViewController {
 
     }
 
-    func action(_ sender: DPSegmentedControl) {
+    func action(_ sender: BMSegmentedControl) {
         print("sender: \(sender.selectedIndex)")
     }
 
