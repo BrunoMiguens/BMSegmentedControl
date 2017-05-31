@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                      = "BMSegmentedControl"
-  s.version                   = "0.4.1"
+  s.version                   = "0.4.2"
   s.source                    = { :git => "https://github.com/BrunoMiguens/BMSegmentedControl.git",
                                   :tag => s.version.to_s }
 
