@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.author                    = 'BrunoMiguens'
 
   s.ios.deployment_target     = "8.0"
-  s.source_files              = "DPSegmentedControl/**/*.swift"
+  s.source_files              = "BMSegmentedControl/**/*.swift"
   s.requires_arc              = true
 end
