@@ -204,7 +204,7 @@ class BMSegmentedControl: UIControl {
     }
     
     fileprivate func getTextX(_ itemWidth: CGFloat, textWidth: CGFloat) -> CGFloat {
-        var iconWidth:CGFloat = withIcon ? 16.0 : 0.0
+        var iconWidth: CGFloat = withIcon ? 16.0 : 0.0
         
         let avg = iconWidth + textWidth
         let space: CGFloat = (itemWidth - avg) / 2
