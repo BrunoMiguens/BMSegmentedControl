@@ -111,10 +111,10 @@ class BMSegmentedControl: UIControl {
     }
     
     fileprivate func getIconFrameByOrientation(_ orientation: ComponentOrientation, index: Int, text: String) -> CGRect {
-        let width = self.bounds.width/CGFloat(items.count)
-        let height = self.bounds.height
+        let width = bounds.width/CGFloat(items.count)
+        let height = bounds.height
         let iconX = getIconX(width, textWidth: evaluateStringWidth(text))
-        let x = width*CGFloat(index-1)
+        let x = width * CGFloat(index)
         
         switch orientation {
         case .leftRight:
@@ -122,7 +122,7 @@ class BMSegmentedControl: UIControl {
             let iconRect = CGRect(x: evaluateIconX, y: 0, width: 16, height: height)
             return iconRect
         case .topDown:
-            let centre: CGFloat = x + ((width-16)/2)
+            let centre: CGFloat = x + ((width - 16) / 2)
             let iconRect = CGRect(x: centre, y: 7, width: 16, height: 16)
             return iconRect
         }
@@ -167,22 +167,22 @@ class BMSegmentedControl: UIControl {
         }
         labels.removeAll(keepingCapacity: true)
         
-        for index in 1...items.count {
+        for index in 0...items.count - 1 {
             
             let view = UIView.init(frame: CGRect.zero)
             
             let label = UILabel(frame: CGRect.zero)
-            label.text = items[index-1]
+            label.text = items[index]
             label.textColor = textColor
             view.addSubview(label)
             labels.append(label)
             
-            let text = items[index-1]
+            let text = items[index]
             
             if withIcon {
                 self.imgIcon = UIImageView(frame: getIconFrameByOrientation(self.componentOrientation, index: index, text: text))
                 self.imgIcon.contentMode = .scaleAspectFit
-                self.imgIcon.image = icon[index-1]
+                self.imgIcon.image = icon[index]
                 
                 view.addSubview(self.imgIcon)
                 icons.append(self.imgIcon)
@@ -205,7 +205,6 @@ class BMSegmentedControl: UIControl {
     
     fileprivate func getTextX(_ itemWidth: CGFloat, textWidth: CGFloat) -> CGFloat {
         var iconWidth: CGFloat = withIcon ? 16.0 : 0.0
-        
         let avg = iconWidth + textWidth
         let space: CGFloat = (itemWidth - avg) / 2
         
@@ -241,9 +240,12 @@ class BMSegmentedControl: UIControl {
             let label = labels[index]
             
             let text = items[index]
+            label.frame = getTextFrameByOrintation(componentOrientation, text: text, index: index)
             
-            label.frame = getTextFrameByOrintation(self.componentOrientation, text: text, index: index)
-            
+            if index < icons.count {
+                let icon = icons[index]
+                icon.frame = getIconFrameByOrientation(componentOrientation, index: index, text: text)
+            }
         }
     }
     
@@ -267,7 +269,7 @@ class BMSegmentedControl: UIControl {
             
             let iconX = getIconX(labelWidth, textWidth: evaluateStringWidth(text))
             
-            let frame = CGRect(x: item.frame.origin.x - (iconX*2), y: 0, width: item.frame.width, height: self.bounds.height)
+            let frame = CGRect(x: item.frame.origin.x - (iconX * 2), y: 0, width: item.frame.width, height: self.bounds.height)
             
             if frame.contains(location) {
                 calculatedIndex = index
@@ -306,7 +308,7 @@ class BMSegmentedControl: UIControl {
         let labelWidth = self.bounds.width / CGFloat(items.count)
         let iconX = getTextX(labelWidth, textWidth: evaluateStringWidth(text))
         
-        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: [], animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: [], animations: {
             
             var labelFrame = self.selectedLabel.bounds
             
