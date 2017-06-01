@@ -77,6 +77,7 @@ class BMSegmentedControl: UIControl {
     
     var selectedIndex: Int = 0 {
         didSet {
+            setTextColor()
             displayNewSelectedIndex()
         }
     }
@@ -204,7 +205,7 @@ class BMSegmentedControl: UIControl {
     }
     
     fileprivate func getTextX(_ itemWidth: CGFloat, textWidth: CGFloat) -> CGFloat {
-        var iconWidth: CGFloat = withIcon ? 16.0 : 0.0
+        let iconWidth: CGFloat = withIcon ? 16.0 : 0.0
         let avg = iconWidth + textWidth
         let space: CGFloat = (itemWidth - avg) / 2
         
@@ -225,9 +226,10 @@ class BMSegmentedControl: UIControl {
         selectedFrame.size.width = selectedFrame.width - 8
         selectedFrame.size.height = selectedFrame.height - 8
         
+        setTextColor()
+        displayNewSelectedIndex()
+        
         if selectedIndex > 0 {
-            setTextColor()
-            setSelectedTextColor()
             thumbView.frame = setDefaultSelectionPoint(selectedIndex)
         } else {
             thumbView.frame = selectedFrame
@@ -247,6 +249,7 @@ class BMSegmentedControl: UIControl {
                 icon.frame = getIconFrameByOrientation(componentOrientation, index: index, text: text)
             }
         }
+        
     }
     
     fileprivate func evaluateStringWidth(_ textToEvaluate: String) -> CGFloat {
